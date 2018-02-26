@@ -335,7 +335,7 @@ def Ekeygen(rawKey):
     if keyLength == 16:
         v = list(t)
         feistel1(v, SIGMA1)
-        v = map(lambda a,b:a^b, v, t)
+        v = list(map(lambda a,b:a^b, v, t))
         feistel1(v, SIGMA2)
         t = list(t)
         t += v
@@ -364,11 +364,11 @@ def Ekeygen(rawKey):
         return tuple(t)
 
     else:
-        v = map(lambda a,b:a^b, t, u)
+        v = list(map(lambda a,b:a^b, t, u))
         feistel1(v, SIGMA1)
-        v = map(lambda a,b:a^b, v, t)
+        v = list(map(lambda a,b:a^b, v, t))
         feistel1(v, SIGMA2)
-        w = map(lambda a,b:a^b, u, v)
+        w = list(map(lambda a,b:a^b, u, v))
         feistel1(w, SIGMA3)
         t = list(t)
         t += w
@@ -415,7 +415,7 @@ def EncryptBlock(plainText, keyTable):
     returns: string; chipher text 16 characters'''
 
     t = list(struct.unpack('!IIII', plainText))
-    t = map(lambda a,b:a^b, t, keyTable[0:4])
+    t = list(map(lambda a,b:a^b, t, keyTable[0:4]))
 
     feistel1(t, keyTable[4:8])
     feistel1(t, keyTable[8:12])
@@ -437,7 +437,7 @@ def EncryptBlock(plainText, keyTable):
 
     if len(keyTable) == 52:
         # 128 bit key
-        t = map(lambda a,b:a^b, (t[2], t[3], t[0], t[1]), keyTable[48:52])
+        t = list(map(lambda a,b:a^b, (t[2], t[3], t[0], t[1]), keyTable[48:52]))
     else:
         # 192 or 256 bit key
         t[1] ^= leftRotate1(t[0] & keyTable[48])
@@ -447,7 +447,7 @@ def EncryptBlock(plainText, keyTable):
         feistel1(t, keyTable[52:56])
         feistel1(t, keyTable[56:60])
         feistel1(t, keyTable[60:64])
-        t = map(lambda a,b:a^b, (t[2], t[3], t[0], t[1]), keyTable[64:68])
+        t = list(map(lambda a,b:a^b, (t[2], t[3], t[0], t[1]), keyTable[64:68]))
 
     return struct.pack('!IIII', *t)
 
@@ -463,10 +463,10 @@ def DecryptBlock(cipherText, keyTable):
 
     if len(keyTable) == 52:
         # 128 bit key
-        t = map(lambda a,b:a^b, t, keyTable[48:52])
+        t = list(map(lambda a,b:a^b, t, keyTable[48:52]))
     else:
         # 192 or 256 bit key
-        t = map(lambda a,b:a^b, t, keyTable[64:68])
+        t = list(map(lambda a,b:a^b, t, keyTable[64:68]))
         feistel2(t, keyTable[60:64])
         feistel2(t, keyTable[56:60])
         feistel2(t, keyTable[52:56])
@@ -493,7 +493,7 @@ def DecryptBlock(cipherText, keyTable):
     feistel2(t, keyTable[8:12])
     feistel2(t, keyTable[4:8])
 
-    t = map(lambda a,b:a^b, (t[2], t[3], t[0], t[1]), keyTable[0:4])
+    t = list(map(lambda a,b:a^b, (t[2], t[3], t[0], t[1]), keyTable[0:4]))
     return struct.pack('!IIII', *t)
 
 
