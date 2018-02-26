@@ -498,11 +498,11 @@ def DecryptBlock(cipherText, keyTable):
 
 
 if __name__ == '__main__':
-    key128 = Ekeygen("0123456789abcdef")
-    key192 = Ekeygen("0123456789abcdef01234567")
-    key256 = Ekeygen("0123456789abcdef0123456789abcdef")
+    key128 = Ekeygen(b"0123456789abcdef")
+    key192 = Ekeygen(b"0123456789abcdef01234567")
+    key256 = Ekeygen(b"0123456789abcdef0123456789abcdef")
 
-    plain = "0123456789abcdef"
+    plain = b"0123456789abcdef"
     enc128 = EncryptBlock(plain, key128)
     dec128 = DecryptBlock(enc128, key128)
     enc192 = EncryptBlock(plain, key192)
@@ -563,9 +563,9 @@ if __name__ == '__main__':
         0x32b31818, 0x99199a1a, 0x9b1b9c1c, 0xb0b131b2,
         0x0ae2dcf7, 0x63cd1a6d, 0x0debf110, 0x2c87abdd )
 
-    assert enc128 == 'jr\xa9\x8b\x8a\x1d\x96f\xe8\x05\x98ot\x04tS'
-    assert enc192 == '\xbd\x91\xe2\x05\x10W\xb0\xa2EA\xefJ5\x04\x95\xed'
-    assert enc256 == '\xe1\xab\x1b\xa6\xa1x:\xff\xd4\x18\xb4y\xe5\xba\x9a\xf9'
+    assert enc128 == b'jr\xa9\x8b\x8a\x1d\x96f\xe8\x05\x98ot\x04tS'
+    assert enc192 == b'\xbd\x91\xe2\x05\x10W\xb0\xa2EA\xefJ5\x04\x95\xed'
+    assert enc256 == b'\xe1\xab\x1b\xa6\xa1x:\xff\xd4\x18\xb4y\xe5\xba\x9a\xf9'
 
     assert dec128 == plain
     assert dec192 == plain
