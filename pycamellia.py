@@ -330,7 +330,7 @@ def Ekeygen(rawKey):
         t = struct.unpack('!IIIIIIII', rawKey)
         (t, u) = (t[0:4], t[4:8])
     else:
-        raise ValueError, 'rawKey must be 16, 24 or 32 characters length.'
+        raise ValueError('rawKey must be 16, 24 or 32 characters length.')
 
     if keyLength == 16:
         v = list(t)
