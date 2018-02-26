@@ -571,4 +571,4 @@ if __name__ == '__main__':
     assert dec192 == plain
     assert dec256 == plain
 
-    print 'basic test ok'
+    print('basic test ok')
